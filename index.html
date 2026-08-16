@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Diorama AR</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body style="margin: 0; background-color: #111; color: white; font-family: sans-serif;">
+
+  <!-- Selector para cambiar de objeto -->
+  <div style="position: absolute; top: 10px; left: 10px; z-index: 10;">
+    <label for="model-select"><b>Elegir objeto:</b></label>
+    <select id="model-select" style="padding: 8px; border-radius: 5px; background: #fff; color: #000;">
+      <option value="semaforo.glb">Semáforo</option>
+      <option value="edificio.glb">Edificio</option>
+      <option value="poste_luz.glb">Poste de luz</option>
+    </select>
+  </div>
+
+  <model-viewer 
+    id="ar-viewer"
+    src="semaforo.glb" 
+    alt="Objeto 3D para diorama"
+    ar 
+    ar-modes="webxr scene-viewer quick-look" 
+    camera-controls 
+    shadow-intensity="1"
+    style="width: 100vw; height: 100vh;">
+    
+    <button slot="ar-button" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+      VER EN MI MESA 📱
+    </button>
+  </model-viewer>
+
+  <script>
+    const select = document.getElementById('model-select');
+    const viewer = document.getElementById('ar-viewer');
+
+    select.addEventListener('change', (event) => {
+      viewer.src = event.target.value;
+    });
+  </script>
+
+</body>
+</html>
