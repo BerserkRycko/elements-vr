@@ -3,113 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Diorama AR - Visor de Modelos</title>
-  
-  <!-- Cargamos la librería model-viewer de Google -->
+  <title>Mi Diorama AR</title>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-  
   <style>
-    body {
-      margin: 0;
-      background-color: #1a1a1a;
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden; /* Evita scroll indeseado al interactuar con el 3D */
-    }
-
-    /* Contenedor de controles flotante con diseño cristalizado */
-    .controls-container {
+    /* Estilos para el menú desplegable */
+    .custom-select-wrapper {
       position: absolute;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 10;
-      background: rgba(30, 30, 30, 0.8);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
-      padding: 15px 20px;
+      padding: 12px 20px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      width: 80%;
-      max-width: 350px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-
-    label {
-      font-size: 14px;
+    
+    .custom-select-wrapper label {
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #aaa;
+      letter-spacing: 0.5px;
+      font-size: 0.9rem;
     }
 
-    select {
-      width: 100%;
-      padding: 10px;
+    #model-select {
+      padding: 10px 16px;
       border-radius: 8px;
-      background: #333;
-      color: #fff;
-      border: 1px solid #555;
-      font-size: 16px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      color: #333;
+      font-size: 1rem;
       outline: none;
       cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    select:focus {
-      border-color: #4CAF50;
-    }
-
-    /* Estilo del botón de Realidad Aumentada */
-    .ar-button-style {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 15px 30px;
-      background: linear-gradient(135deg, #4CAF50, #2E7D32);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 16px;
-      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .ar-button-style:active {
-      transform: translateX(-50%) scale(0.95);
+    #model-select:hover {
+      border-color: #007bff;
+      background: #fff;
     }
   </style>
 </head>
-<body>
+<body style="margin: 0; background-color: #111; overflow: hidden;">
 
-  <div class="controls-container">
-    <label for="model-select"><b>Selecciona un elemento:</b></label>
+  <!-- Menú moderno para elegir objeto -->
+  <div class="custom-select-wrapper">
+    <label for="model-select">SELECCIONA UN ELEMENTO:</label>
     <select id="model-select">
-      <!-- He limpiado los nombres para que se lean mejor en la interfaz, 
-           pero los valores "value" corresponden exactamente a tus archivos -->
       <option value="semaforo.glb" selected>Semáforo</option>
       <option value="abandoned_building.glb">Edificio Abandonado</option>
       <option value="building_set.glb">Set de Edificios</option>
-      <option value="building.glb">Edificio Simple</option>
-      <option value="buildings.glb">Edificios Múltiples</option>
-      <option value="ccity_building_set_1.glb">Set Edificios Ciudad (Ccity)</option>
-      <option value="free_london_skyscraper.glb">Rascacielos (Londres)</option>
+      <option value="building.glb">Edificio Genérico</option>
+      <option value="buildings.glb">Grupo de Edificios</option>
+      <option value="ccity_building_set_1.glb">Set Ciudad 1</option>
+      <option value="free_london_skyscraper.glb">Rascacielos Londres</option>
       <option value="office_building.glb">Edificio de Oficinas</option>
       <option value="plano_de_carretera.glb">Plano de Carretera</option>
-      <option value="road_hd.glb">Carretera (HD)</option>
-      <option value="road.glb">Carretera</option>
-      <option value="street_road.glb">Calle / Vía urbana</option>
+      <option value="road_hd.glb">Carretera HD</option>
+      <option value="road.glb">Carretera Simple</option>
+      <option value="street_road.glb">Calle Urbana</option>
     </select>
   </div>
 
-  <!-- Por defecto cargará "semaforo.glb" ya que es el que marcamos como 'selected' -->
   <model-viewer 
     id="ar-viewer"
     src="semaforo.glb" 
@@ -118,56 +80,22 @@
     ar-modes="webxr scene-viewer quick-look" 
     camera-controls 
     shadow-intensity="1.5"
-    scale="0.05 0.05 0.05" 
+    scale="0.05 0.05 0.05"
     style="width: 100vw; height: 100vh;">
     
-    <!-- ... existing code ... -->
-    <button slot="ar-button" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+    <button slot="ar-button" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
       VER EN MI MESA 📱
     </button>
   </model-viewer>
 
-  <!-- Botón para tomar captura de pantalla del visor 3D -->
-  <button id="capture-btn" style="position: absolute; bottom: 90px; right: 20px; z-index: 20; padding: 12px; background: #ff4757; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); cursor: pointer; display: flex; align-items: center; justify-content: center;">
-    📷
-  </button>
-
   <script>
     const select = document.getElementById('model-select');
     const viewer = document.getElementById('ar-viewer');
-    const captureBtn = document.getElementById('capture-btn');
 
     select.addEventListener('change', (event) => {
       viewer.src = event.target.value;
     });
-
-    // Función para tomar y descargar la captura
-    captureBtn.addEventListener('click', async () => {
-      try {
-        // Obtenemos el blob (la imagen) del model-viewer
-        const blob = await viewer.toBlob({ mimeType: 'image/png', idealAspect: true });
-        
-        // Creamos una URL temporal para el blob
-        const url = URL.createObjectURL(blob);
-        
-        // Creamos un enlace invisible para forzar la descarga
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `captura_diorama_${Date.now()}.png`; // Nombre del archivo
-        document.body.appendChild(a);
-        a.click();
-        
-        // Limpiamos
-        setTimeout(() => {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }, 100);
-      } catch (error) {
-        console.error("Error al capturar la imagen:", error);
-        alert("Hubo un problema al tomar la captura.");
-      }
-    });
   </script>
-  
+
 </body>
 </html>
