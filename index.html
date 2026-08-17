@@ -1,4 +1,115 @@
-<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Diorama AR - Visor de Modelos</title>
+  
+  <!-- Cargamos la librería model-viewer de Google -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  
+  <style>
+    body {
+      margin: 0;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden; /* Evita scroll indeseado al interactuar con el 3D */
+    }
+
+    /* Contenedor de controles flotante con diseño cristalizado */
+    .controls-container {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 80%;
+      max-width: 350px;
+    }
+
+    label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #aaa;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      font-size: 16px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    select:focus {
+      border-color: #4CAF50;
+    }
+
+    /* Estilo del botón de Realidad Aumentada */
+    .ar-button-style {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #4CAF50, #2E7D32);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ar-button-style:active {
+      transform: translateX(-50%) scale(0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="controls-container">
+    <label for="model-select"><b>Selecciona un elemento:</b></label>
+    <select id="model-select">
+      <!-- He limpiado los nombres para que se lean mejor en la interfaz, 
+           pero los valores "value" corresponden exactamente a tus archivos -->
+      <option value="semaforo.glb" selected>Semáforo</option>
+      <option value="abandoned_building.glb">Edificio Abandonado</option>
+      <option value="building_set.glb">Set de Edificios</option>
+      <option value="building.glb">Edificio Simple</option>
+      <option value="buildings.glb">Edificios Múltiples</option>
+      <option value="ccity_building_set_1.glb">Set Edificios Ciudad (Ccity)</option>
+      <option value="free_london_skyscraper.glb">Rascacielos (Londres)</option>
+      <option value="office_building.glb">Edificio de Oficinas</option>
+      <option value="plano_de_carretera.glb">Plano de Carretera</option>
+      <option value="road_hd.glb">Carretera (HD)</option>
+      <option value="road.glb">Carretera</option>
+      <option value="street_road.glb">Calle / Vía urbana</option>
+    </select>
+  </div>
+
+  <!-- Por defecto cargará "semaforo.glb" ya que es el que marcamos como 'selected' -->
   <model-viewer 
     id="ar-viewer"
     src="semaforo.glb" 
@@ -57,6 +168,6 @@
       }
     });
   </script>
-
+  
 </body>
 </html>
